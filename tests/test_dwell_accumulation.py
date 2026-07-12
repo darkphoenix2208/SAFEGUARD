@@ -184,12 +184,12 @@ alert_fired_with  = bool(canon_above_threshold)
 alert_fired_without = bool(raw_above_threshold)
 
 if alert_fired_with and not alert_fired_without:
-    verdict = "✅ PASS: IDRelinker enabled alert that raw tracker missed"
+    verdict = "[PASS] IDRelinker enabled alert that raw tracker missed"
 elif max_canon_dwell > max_raw_dwell + 0.5:
-    verdict = f"✅ PASS: IDRelinker added >{max_canon_dwell - max_raw_dwell:.1f}s of dwell continuity"
+    verdict = f"[PASS] IDRelinker added >{max_canon_dwell - max_raw_dwell:.1f}s of dwell continuity"
 elif alert_fired_with and alert_fired_without:
-    verdict = "⚠️  INCONCLUSIVE: Both fire threshold — clip dwell is long enough that relinker is not decisive in this window"
+    verdict = "[WARN] INCONCLUSIVE: Both fire threshold -- clip dwell is long enough that relinker is not decisive in this window"
 else:
-    verdict = f"❌ FAIL: IDRelinker did not improve dwell continuity (raw={max_raw_dwell:.2f}s, canon={max_canon_dwell:.2f}s)"
+    verdict = f"[FAIL] IDRelinker did not improve dwell continuity (raw={max_raw_dwell:.2f}s, canon={max_canon_dwell:.2f}s)"
 
 print(f"\n  Integration test verdict: {verdict}")
