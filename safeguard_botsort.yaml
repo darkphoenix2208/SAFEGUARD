@@ -1,0 +1,26 @@
+# Safeguard custom BoT-SORT tracker configuration
+# Tuned for construction site conditions: occlusion, low-light, close proximity
+#
+# Changes from default (botsort.yaml):
+#   track_buffer:     30 → 75   (keep lost tracks alive 2.5x longer; helps with short occlusions)
+#   match_thresh:     0.8 → 0.65 (loosen IOU matching so partially-occluded tracks still re-associate)
+#   new_track_thresh: 0.25 → 0.35 (slightly higher bar to spawn a NEW track; reduces spurious IDs)
+#   proximity_thresh: 0.5 → 0.35 (looser ReID proximity; helps match after large positional jump due to occlusion)
+#   appearance_thresh:0.8 → 0.7  (looser appearance similarity; construction gear causes inconsistent features)
+
+tracker_type: botsort
+track_high_thresh: 0.25      # First-stage match threshold (unchanged)
+track_low_thresh: 0.1        # Second-stage threshold (unchanged)
+new_track_thresh: 0.35       # Raised from 0.25 → fewer spurious new IDs
+track_buffer: 75             # Raised from 30 → keep lost tracks alive for 75 frames (~2.5s at 30fps)
+match_thresh: 0.65           # Loosened from 0.8 → helps re-associate after brief occlusion
+fuse_score: True
+
+# BoT-SORT specifics
+gmc_method: sparseOptFlow    # Global motion compensation for any camera movement
+
+# ReID thresholds (no external ReID model - uses detector backbone features)
+proximity_thresh: 0.35       # Loosened from 0.5
+appearance_thresh: 0.7       # Loosened from 0.8
+with_reid: False             # Keep False: no external ReID model required
+model: auto

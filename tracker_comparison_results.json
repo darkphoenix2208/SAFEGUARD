@@ -1,0 +1,74 @@
+{
+    "test_crowd.mp4": {
+        "before": {
+            "frames_analyzed": 100,
+            "person_detection_rate": 100.0,
+            "unique_person_ids_tracked": 5,
+            "person_conf_avg": 0.63,
+            "person_conf_min": 0.26,
+            "person_conf_max": 0.91
+        },
+        "after": {
+            "frames_analyzed": 100,
+            "person_detection_rate": 95.0,
+            "unique_person_ids_tracked": 4,
+            "person_conf_avg": 0.68,
+            "person_conf_min": 0.32,
+            "person_conf_max": 0.91
+        }
+    },
+    "test_lowlight.mp4": {
+        "before": {
+            "frames_analyzed": 100,
+            "person_detection_rate": 100.0,
+            "unique_person_ids_tracked": 9,
+            "person_conf_avg": 0.65,
+            "person_conf_min": 0.26,
+            "person_conf_max": 0.9
+        },
+        "after": {
+            "frames_analyzed": 100,
+            "person_detection_rate": 100.0,
+            "unique_person_ids_tracked": 11,
+            "person_conf_avg": 0.7,
+            "person_conf_min": 0.35,
+            "person_conf_max": 0.9
+        }
+    },
+    "test_ppe_closeup.mp4": {
+        "before": {
+            "frames_analyzed": 100,
+            "person_detection_rate": 100.0,
+            "unique_person_ids_tracked": 10,
+            "person_conf_avg": 0.67,
+            "person_conf_min": 0.25,
+            "person_conf_max": 0.93
+        },
+        "after": {
+            "frames_analyzed": 100,
+            "person_detection_rate": 100.0,
+            "unique_person_ids_tracked": 9,
+            "person_conf_avg": 0.73,
+            "person_conf_min": 0.34,
+            "person_conf_max": 0.93
+        }
+    },
+    "test_proximity.mp4": {
+        "before": {
+            "frames_analyzed": 100,
+            "person_detection_rate": 100.0,
+            "unique_person_ids_tracked": 14,
+            "person_conf_avg": 0.55,
+            "person_conf_min": 0.25,
+            "person_conf_max": 0.94
+        },
+        "after": {
+            "frames_analyzed": 100,
+            "person_detection_rate": 99.0,
+            "unique_person_ids_tracked": 15,
+            "person_conf_avg": 0.64,
+            "person_conf_min": 0.32,
+            "person_conf_max": 0.94
+        }
+    }
+}
