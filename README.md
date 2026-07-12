@@ -1,117 +1,69 @@
-<div align="center">
+# 🚧 Safeguard AI
 
-  <h1>🚧 Safeguard AI 🚧</h1>
-  <h3><em>Redefining construction site safety through Physical AI and smart surveillance.</em></h3>
+**Redefining construction site safety through Physical AI and smart surveillance.**
 
-</div>
-
-<!-- Terminal Intro Animation -->
-<div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Outfit&size=18&duration=2000&pause=800&color=00FFFF&center=true&width=600&lines=Initializing+Safeguard+AI+Module...;Booting+Site+Surveillance...;Activating+Danger+Zone+Detection...;Enhancing+Construction+Safety...;System+Ready!" alt="Terminal Animation">
-</div>
-
-<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png" alt="Divider">
-
-## 🎯 Problem & Inspiration
-
-<table>
-<tr>
-<td>
-
-Construction sites are inherently dangerous environments. Despite strict safety protocols, human oversight is limited, and accidents involving heavy machinery, falls, and unauthorized access to hazardous zones are far too common.
-
-Built for the **Kaya AI "Physical AI" Track**, **Safeguard** transforms passive CCTV cameras into intelligent, proactive safety wardens. By utilizing real-time computer vision, Safeguard monitors construction sites, analyzes worker interactions with their physical environment, and issues instant alerts to prevent accidents before they happen.
-
-</td>
-<td width="40%">
-<img src="images/surveillance-hero-bg.jpg" width="100%">
-</td>
-</tr>
-</table>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=divider">
-
-## 🧠 What It Does (Physical AI Features)
-
-<div align="center">
-  <table>
-    <tr>
-      <td align="center"><h3>🏗️</h3><h4>Danger Zone Intrusion</h4><p>Flags workers lingering near live machinery, crane swing radii, or excavation pits.</p></td>
-      <td align="center"><h3>🎯</h3><h4>YOLOv8 Detection</h4><p>Identifies heavy machinery, excavators, and site personnel in real-time.</p></td>
-    </tr>
-    <tr>
-      <td align="center"><h3>🤕</h3><h4>Fall & Posture Detection</h4><p>Triggers emergency alerts if a worker falls from scaffolding or collapses on site.</p></td>
-      <td align="center"><h3>🔍</h3><h4>Real-Time Alerts</h4><p>Instant SMS/WhatsApp notifications to site managers via Twilio & PyWhatKit.</p></td>
-    </tr>
-    <tr>
-      <td align="center"><h3>👁️</h3><h4>Worker Tracking</h4><p>Assigns unique IDs to track movement through active hazard zones.</p></td>
-      <td align="center"><h3>🌐</h3><h4>Command Dashboard</h4><p>A sleek, Cyber Cyan & Indigo React dashboard for monitoring multiple feeds.</p></td>
-    </tr>
-  </table>
-</div>
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
-
-## ⚙️ Tech Stack
-
-<div align="center">
-
-🐍 Python • 📹 OpenCV • 🧠 YOLOv8 • 🖐️ MediaPipe • 🌐 Flask Backend  
-⚛️ React & Vite • 🌊 Tailwind CSS • 💬 Twilio • 🔥 Firebase • 🐘 PostgreSQL
-
-</div>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00e5ff,100:0044ff&height=100&section=divider&text=Target%20Users&fontColor=ffffff&fontSize=28&animation=twinkling">
-
-## 👷 Target Users
-
-- 🏗️ **Site Managers & Foremen** – Looking to maintain 24/7 safety oversight without manual patrolling.
-- 🦺 **Safety Officers (HSE)** – Needing automated logging of safety violations (e.g., restricted zone intrusions).
-- 🏢 **Construction Firms** – Aiming to lower insurance premiums and achieve zero-harm work environments.
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
-
-## 🏗️ How We Built It
-
-<table>
-<tr>
-<td>
-
-Safeguard bridges the gap between digital models and physical safety:
-
-- 🧵 **Multi-threaded Pipeline**: Ensures high-FPS processing of heavy AI models alongside video I/O.
-- 🧠 **YOLOv8 & Centroid Tracking**: Pinpoints human coordinates relative to mapped danger polygons.
-- 🖐️ **MediaPipe integration**: Tracks worker posture for critical health emergencies (falls/collapses).
-- 🌐 **Modern React Frontend**: HMR-enabled Vite dashboards styled with a premium Indigo & Cyber Cyan glassmorphism aesthetic.
-
-</td>
-<td width="40%">
-<img src="https://media.giphy.com/media/l2JHRhAtnJSDNJ2py/giphy.gif" width="100%">
-</td>
-</tr>
-</table>
-
-<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png" alt="Divider">
-
-## 🧠 What We Learned
-
-- Designing robust Physical AI pipelines that map 2D video coordinates to physical danger zones.
-- Overcoming legacy dependency issues (e.g., dynamically handling legacy MediaPipe APIs on Python 3.13).
-- Crafting premium, hardware-accelerated frontend UI architectures using React and Tailwind CSS.
-- Reducing alert fatigue by tuning dwell-time thresholds for danger zones.
+Safeguard transforms passive CCTV cameras into intelligent, proactive safety wardens. Built for the **Physical AI** track (Kaya AI Hackathon), it utilizes real-time computer vision to monitor construction sites, analyze worker interactions with their physical environment, and issue instant alerts to prevent accidents before they happen.
 
 ---
 
-## 🧩 Challenges Faced
+## 🎯 Problem & Inspiration
 
-- ⚠️ **Dynamic Tracking:** Handling bounding-box flickering where the tracker would assign new IDs to workers, prematurely resetting their dwell-time in danger zones.
-- 🔍 **Real-World Clutter:** Differentiating workers from heavy machinery in chaotic, dusty construction footage.
-- 💾 **System Overhead:** Managing the memory footprint of YOLOv8 alongside pose estimation on standard hardware.
+Construction sites are inherently dangerous environments. Despite strict safety protocols, human oversight is limited. Accidents involving heavy machinery, falls, and unauthorized access to hazardous zones are far too common. Safeguard acts as an automated, always-on safety officer that understands the spatial context of a construction site.
 
-<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png" alt="Divider">
+---
 
-> 🔐 *“A smarter site isn’t just productive — it’s physically aware.”*
+## 🧠 Physical AI Features
 
-<div align="center">
-  <sub>Built for the Kaya AI Hackathon</sub>
-</div>
+### 🏗️ Danger Zone Intrusion
+Flags workers who linger near live machinery, crane swing radii, or excavation pits for too long. Uses a custom ID Relinking algorithm to maintain dwell-time continuity even through physical occlusions.
+
+### 🎯 Heavy Machinery & Personnel Detection
+Powered by YOLOv8, Safeguard identifies excavators, trucks, and site personnel in real-time, even in cluttered environments.
+
+### 🤕 Fall & Posture Detection
+Triggers emergency alerts if a worker falls from scaffolding or collapses on site, analyzing skeletal posture continuously to detect sudden vertical drops.
+
+### 🔍 Real-Time Alerts
+Sends instant SMS or WhatsApp notifications to site managers when critical safety thresholds are breached.
+
+### 🌐 Command Dashboard
+A sleek, real-time React dashboard featuring a modern "Trust Indigo & Cyber Cyan" design system for monitoring multiple camera feeds and safety metrics simultaneously.
+
+---
+
+## ⚙️ Tech Stack
+
+- **Computer Vision:** YOLOv8, OpenCV, MediaPipe
+- **Tracking & Logic:** BoT-SORT, Custom ID Relinker (Spatial-Temporal tracking fallback)
+- **Backend:** Flask, Python 3.13
+- **Frontend:** React, Vite, Vanilla CSS
+- **Notifications:** Twilio, PyWhatKit
+
+---
+
+## 👷 Target Users
+
+- **Site Managers & Foremen:** Maintain 24/7 safety oversight without manual patrolling.
+- **Safety Officers (HSE):** Automate the logging of safety violations and restricted zone intrusions.
+- **Construction Firms:** Lower insurance premiums and strive toward zero-harm work environments.
+
+---
+
+## 🏗️ How It Works
+
+Safeguard bridges the gap between digital models and physical safety:
+1. **Multi-threaded Pipeline:** Ensures high-FPS processing of heavy AI models alongside video I/O.
+2. **YOLOv8 & Tracking:** Pinpoints human coordinates relative to mapped danger polygons using BoT-SORT.
+3. **ID Relinker:** A robust post-processing layer that stitches broken tracker IDs together based on spatial and temporal proximity, preventing false resets of danger-zone dwell timers during occlusions.
+4. **Posture Analysis:** MediaPipe tracks worker skeletons to detect sudden drops in vertical height indicative of a fall.
+
+---
+
+## 🧩 Overcoming Challenges
+
+- **Tracker ID Instability (The Occlusion Problem):** In crowded construction sites or low-light conditions, workers constantly occlude each other, causing object trackers to lose IDs. We built a custom `IDRelinker` module that protects the critical "dwell-timer" by re-associating lost tracks within a 100px / 2.0s spatial-temporal window.
+- **Real-World Clutter:** Differentiating workers from heavy machinery in chaotic, dusty construction footage required careful confidence thresholding and dedicated zone definitions.
+
+---
+
+> *"A smarter site isn’t just productive — it’s physically aware."*
