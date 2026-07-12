@@ -1,0 +1,292 @@
+[
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:42:04.198409"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      384.0,
+      216.0,
+      480.0,
+      270.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      432.0,
+      243.0
+    ],
+    "reason": "low_center_mass",
+    "timestamp": "2026-07-11T01:42:10.082934"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:16.199780"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:16.552311"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:16.876356"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:17.149956"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:17.485400"
+  },
+  {
+    "type": "danger_zone_intrusion",
+    "person_id": "person_1",
+    "duration": 1.714049,
+    "area_covered": 0.0,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "timestamp": "2026-07-11T01:46:17.913729"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:17.967505"
+  },
+  {
+    "type": "danger_zone_intrusion",
+    "person_id": "person_1",
+    "duration": 2.445572,
+    "area_covered": 0.0,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "timestamp": "2026-07-11T01:46:18.645252"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:18.691983"
+  },
+  {
+    "type": "danger_zone_intrusion",
+    "person_id": "person_1",
+    "duration": 2.809624,
+    "area_covered": 0.0,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "timestamp": "2026-07-11T01:46:19.009304"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:19.046002"
+  },
+  {
+    "type": "danger_zone_intrusion",
+    "person_id": "person_1",
+    "duration": 3.160754,
+    "area_covered": 0.0,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "timestamp": "2026-07-11T01:46:19.360434"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:19.396212"
+  },
+  {
+    "type": "danger_zone_intrusion",
+    "person_id": "person_1",
+    "duration": 3.487458,
+    "area_covered": 0.0,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "timestamp": "2026-07-11T01:46:19.687138"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:19.724867"
+  },
+  {
+    "type": "danger_zone_intrusion",
+    "person_id": "person_1",
+    "duration": 4.031309,
+    "area_covered": 0.0,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "timestamp": "2026-07-11T01:46:20.230989"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      960.0,
+      540.0,
+      1056.0,
+      594.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      1008.0,
+      567.0
+    ],
+    "reason": "high_aspect_ratio",
+    "timestamp": "2026-07-11T01:46:20.271155"
+  },
+  {
+    "type": "fall_detection",
+    "bbox": [
+      384.0,
+      216.0,
+      480.0,
+      270.0
+    ],
+    "aspect_ratio": 1.7777777777777777,
+    "center": [
+      432.0,
+      243.0
+    ],
+    "reason": "low_center_mass",
+    "timestamp": "2026-07-11T01:46:33.045730"
+  }
+]

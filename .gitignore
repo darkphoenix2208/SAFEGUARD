@@ -1,0 +1,29 @@
+# ignore the pycache folder
+__pycache__
+*.pyc
+
+# ignore pre trained yolo weights
+yolov8n.pt
+yolov8s.pt
+
+# ignore environment variables file
+.env
+
+# ignore virtual environments
+venv/
+.venv/
+env/
+
+# ignore node modules and builds
+node_modules/
+dist/
+build/
+.next/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db

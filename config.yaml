@@ -1,0 +1,77 @@
+# SafeGuard AI — Per-camera configuration
+# Values here replace all hardcoded constants in detection modules.
+# Each camera entry can override global defaults.
+
+global:
+  model_path: "yolov8s.pt"
+  confidence_threshold: 0.30
+  person_class_id: 0
+  device: "cpu"  # "cuda" or "cpu"
+
+zone_intrusion:
+  dwell_threshold_sec: 1.0          # seconds of VIDEO time before alert
+  min_consec_frames: 8              # consecutive in-zone frames required (FP guard)
+  centroid_match_px: 100            # max px distance to match same person across frames
+  id_persistence_frames: 30         # frames to hold a dropped track (1s @ 30fps)
+  area_threshold_px2: 80            # person must stay within this area (not walking through)
+  danger_zone_norm:                 # danger zone polygon in normalised [0,1] x,y coords
+    - [0.05, 0.35]
+    - [0.50, 0.35]
+    - [0.50, 0.95]
+    - [0.05, 0.95]
+
+fall_detection:
+  aspect_ratio_threshold: 1.5       # width/height ratio above which bbox is "fallen"
+  height_change_threshold: 30       # pixel drop in bbox top edge to detect fall
+  min_consec_frames: 5              # FP guard for fall alerts
+
+ppe_detection:
+  model_path: "weights/ppe_yolov8.pt"
+  confidence_threshold: 0.30        # lowered from 0.50 — model peaks at 0.30-0.45
+  alert_classes:                    # class names that trigger a violation alert
+    - "NO-Hardhat"
+    - "NO-Safety Vest"
+    - "NO-Gloves"
+    - "NO-Goggles"
+    - "NO-Mask"
+  min_consec_frames: 5
+
+machinery_proximity:
+  threshold_px: 150                 # pixel distance between person and machinery centroids
+  machinery_classes:                # COCO class IDs treated as heavy machinery
+    - 2    # car
+    - 5    # bus
+    - 6    # train
+    - 7    # truck
+
+risk_scorer:
+  dwell_weight: 0.40
+  proximity_weight: 0.35
+  time_of_day_weight: 0.25
+  max_dwell_sec: 120                # dwell >= this → maximum dwell contribution
+  proximity_danger_m: 0.5           # distance <= this → maximum proximity contribution
+  night_hours: [0, 1, 2, 3, 4, 5, 22, 23]  # hours treated as higher-risk
+
+alert_logging:
+  log_file: "logs/alerts.jsonl"     # JSON Lines file, one alert per line
+  camera_id: "cam_01"               # overridden per-camera deployment
+
+cameras:
+  cam_01:
+    name: "Excavation Zone"
+    alert_logging:
+      camera_id: "cam_01"
+
+  cam_02:
+    name: "Site Entrance"
+    zone_intrusion:
+      dwell_threshold_sec: 2.0      # entrance zone: stricter threshold
+    alert_logging:
+      camera_id: "cam_02"
+
+  cam_03:
+    name: "Scaffolding Area"
+    fall_detection:
+      min_consec_frames: 3          # scaffolding: more sensitive to fall detection
+    alert_logging:
+      camera_id: "cam_03"
