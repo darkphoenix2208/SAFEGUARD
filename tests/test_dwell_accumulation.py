@@ -144,7 +144,6 @@ def run(video_path: str, use_relinker: bool):
 # Run locally with: python -m pytest tests/test_dwell_accumulation.py -v -s
 # Run standalone:   python tests/test_dwell_accumulation.py
 # ─────────────────────────────────────────────────────────────
-# ─────────────────────────────────────────────────────────────
 
 def test_dwell_accumulation_with_idrelinker():
     """
