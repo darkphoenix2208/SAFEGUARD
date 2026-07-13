@@ -27,3 +27,8 @@ yarn-error.log*
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# testing and logs
+.coverage
+.pytest_cache/
+logs/*.jsonl
