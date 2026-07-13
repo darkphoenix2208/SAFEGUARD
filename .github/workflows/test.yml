@@ -26,11 +26,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install core dependencies
+      - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install pytest pytest-cov
-          pip install numpy opencv-python-headless pyyaml
+          pip install -r requirements.txt
 
       - name: Run full test suite
         # Runs all four test files:

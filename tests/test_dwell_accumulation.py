@@ -37,7 +37,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 sys.path.insert(0, str(BASE_DIR))
 from modules.zone_analyzer import IDRelinker
-from ultralytics import YOLO
 
 VIDEO   = str(BASE_DIR / "test_proximity.mp4")
 TRACKER = str(BASE_DIR / "safeguard_botsort.yaml")
@@ -73,6 +72,8 @@ def run(video_path: str, use_relinker: bool):
         relink_events: list of (frame_num, raw_id, canonical_id) for relinks
         total_unique_ids: int
     """
+    from ultralytics import YOLO  # imported here so CI collection never triggers this
+
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         raise FileNotFoundError(f"Cannot open video: {video_path}")

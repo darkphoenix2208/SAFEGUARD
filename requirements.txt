@@ -1,0 +1,15 @@
+# SafeGuard AI — CI test requirements
+# These are the ONLY packages needed to run the unit test suite (tests/test_core.py,
+# tests/test_id_relinker.py) in CI. The integration test (test_dwell_accumulation.py)
+# auto-skips in CI because the video file is absent, so ultralytics/torch are NOT
+# needed here — they are imported lazily inside run() only when the video is present.
+#
+# Full project dependencies (ultralytics, mediapipe, torch, etc.) are listed in
+# documentations/requirements.txt and installed in the local venv.
+
+pytest>=7.0
+pytest-cov>=4.0
+numpy>=1.24
+opencv-python-headless>=4.7
+pyyaml>=6.0
+scipy>=1.10
