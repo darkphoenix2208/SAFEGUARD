@@ -151,15 +151,26 @@ def test_dwell_accumulation_with_idrelinker():
     Integration test: IDRelinker does not crash the pipeline and the
     canonical-ID dwell is at least as high as the raw-ID dwell.
 
-    Skipped automatically when test_proximity.mp4 is not present so that
-    the CI suite (which does not commit large binary video files) can pass
-    the full test collection without errors.
+    Skipped automatically in CI environments where ultralytics is not installed
+    (the full torch/ultralytics stack is too large for a lightweight CI runner).
+    Run locally with the full venv active:
+        python -m pytest tests/test_dwell_accumulation.py -v -s
     """
+    import importlib.util
+
+    # Skip if ultralytics is not importable (lightweight CI environment)
+    if importlib.util.find_spec("ultralytics") is None:
+        pytest.skip(
+            "ultralytics is not installed in this environment. "
+            "This integration test requires the full local venv (ultralytics + torch). "
+            "Run locally with: python -m pytest tests/test_dwell_accumulation.py -v -s"
+        )
+
+    # Skip if the video file is also missing (different machine / fresh clone)
     if not Path(VIDEO).exists():
         pytest.skip(
             f"test_proximity.mp4 not found at {VIDEO}. "
-            "This test requires the real video file and runs locally only. "
-            "To run: ensure test_proximity.mp4 is in the project root."
+            "This test requires the real video file in the project root."
         )
 
     dwell_raw, _, n_raw_ids = run(VIDEO, use_relinker=False)
