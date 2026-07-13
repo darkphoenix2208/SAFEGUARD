@@ -27,9 +27,10 @@ Reports
 
 import cv2
 import sys
-import os
 import time
 import numpy as np
+import pytest
+import importlib.util
 from pathlib import Path
 
 # Resolve paths relative to this file so the test runs from any machine / working directory.
@@ -143,8 +144,7 @@ def run(video_path: str, use_relinker: bool):
 # Run locally with: python -m pytest tests/test_dwell_accumulation.py -v -s
 # Run standalone:   python tests/test_dwell_accumulation.py
 # ─────────────────────────────────────────────────────────────
-import pytest
-
+# ─────────────────────────────────────────────────────────────
 
 def test_dwell_accumulation_with_idrelinker():
     """
@@ -156,8 +156,6 @@ def test_dwell_accumulation_with_idrelinker():
     Run locally with the full venv active:
         python -m pytest tests/test_dwell_accumulation.py -v -s
     """
-    import importlib.util
-
     # Skip if ultralytics is not importable (lightweight CI environment)
     if importlib.util.find_spec("ultralytics") is None:
         pytest.skip(
