@@ -32,9 +32,17 @@ jobs:
           pip install pytest pytest-cov
           pip install numpy opencv-python-headless pyyaml
 
-      - name: Run unit tests (no model required)
+      - name: Run full test suite
+        # Runs all four test files:
+        #   test_core.py            — 41 unit tests, always runs (no models/videos needed)
+        #   test_id_relinker.py     — 9 IDRelinker unit tests, always runs (pure Python)
+        #   test_dwell_accumulation.py — integration test, SKIPPED in CI because
+        #                               test_proximity.mp4 (~11 MB) is not committed to
+        #                               the repository (large binary). Run locally with the
+        #                               video file present. Skips are shown in CI output,
+        #                               NOT silently omitted.
         run: |
-          pytest tests/test_core.py -v --tb=short \
+          pytest tests/ -v --tb=short \
             --cov=modules --cov-report=term-missing \
             --ignore=tests/test_app.py
 

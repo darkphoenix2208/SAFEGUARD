@@ -30,14 +30,17 @@ import sys
 import os
 import time
 import numpy as np
+from pathlib import Path
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+# Resolve paths relative to this file so the test runs from any machine / working directory.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+sys.path.insert(0, str(BASE_DIR))
 from modules.zone_analyzer import IDRelinker
 from ultralytics import YOLO
 
-BASE_DIR = r"d:\CCTV\AI-Campus-CCTV-System-main"
-VIDEO    = os.path.join(BASE_DIR, "test_proximity.mp4")
-TRACKER  = os.path.join(BASE_DIR, "safeguard_botsort.yaml")
+VIDEO   = str(BASE_DIR / "test_proximity.mp4")
+TRACKER = str(BASE_DIR / "safeguard_botsort.yaml")
 
 PERSON_CLASS = 0
 MAX_FRAMES   = 200          # ~6-7s at 30fps
@@ -72,8 +75,7 @@ def run(video_path: str, use_relinker: bool):
     """
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
-        print(f"ERROR: Cannot open {video_path}")
-        sys.exit(1)
+        raise FileNotFoundError(f"Cannot open video: {video_path}")
 
     width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -134,62 +136,110 @@ def run(video_path: str, use_relinker: bool):
 
 
 # ─────────────────────────────────────────────────────────────
-# Run WITHOUT IDRelinker (baseline — raw tracker IDs only)
+# pytest-compatible test function
+# Skips gracefully if the video file or YOLO model is missing
+# (e.g. CI environment without large binary assets).
+# Run locally with: python -m pytest tests/test_dwell_accumulation.py -v -s
+# Run standalone:   python tests/test_dwell_accumulation.py
 # ─────────────────────────────────────────────────────────────
-print("=" * 65)
-print("Running WITHOUT IDRelinker (raw tracker IDs only)...")
-t0 = time.time()
-dwell_raw, _, n_raw_ids = run(VIDEO, use_relinker=False)
-print(f"  Done in {time.time()-t0:.1f}s")
+import pytest
 
-max_raw_dwell = max(dwell_raw.values(), default=0.0)
-raw_above_threshold = [iid for iid, d in dwell_raw.items() if d >= ALERT_THRESHOLD_S]
-print(f"  Unique raw IDs seen:       {n_raw_ids}")
-print(f"  Max dwell (any raw ID):    {max_raw_dwell:.2f}s")
-print(f"  IDs crossing {ALERT_THRESHOLD_S}s threshold: {raw_above_threshold}")
 
-print()
-print("Running WITH IDRelinker (canonical ID continuity)...")
-t0 = time.time()
-dwell_canon, relink_events, n_raw_ids_r = run(VIDEO, use_relinker=True)
-print(f"  Done in {time.time()-t0:.1f}s")
+def test_dwell_accumulation_with_idrelinker():
+    """
+    Integration test: IDRelinker does not crash the pipeline and the
+    canonical-ID dwell is at least as high as the raw-ID dwell.
 
-max_canon_dwell = max(dwell_canon.values(), default=0.0)
-canon_above_threshold = [iid for iid, d in dwell_canon.items() if d >= ALERT_THRESHOLD_S]
-print(f"  Unique raw IDs seen:       {n_raw_ids_r}")
-print(f"  Relink events (ID saved):  {len(relink_events)}")
-if relink_events[:5]:
-    print(f"  First relinks: {relink_events[:5]}")
-print(f"  Max dwell (canonical ID):  {max_canon_dwell:.2f}s")
-print(f"  IDs crossing {ALERT_THRESHOLD_S}s threshold: {canon_above_threshold}")
+    Skipped automatically when test_proximity.mp4 is not present so that
+    the CI suite (which does not commit large binary video files) can pass
+    the full test collection without errors.
+    """
+    if not Path(VIDEO).exists():
+        pytest.skip(
+            f"test_proximity.mp4 not found at {VIDEO}. "
+            "This test requires the real video file and runs locally only. "
+            "To run: ensure test_proximity.mp4 is in the project root."
+        )
+
+    dwell_raw, _, n_raw_ids = run(VIDEO, use_relinker=False)
+    dwell_canon, relink_events, n_raw_ids_r = run(VIDEO, use_relinker=True)
+
+    max_raw_dwell   = max(dwell_raw.values(),   default=0.0)
+    max_canon_dwell = max(dwell_canon.values(), default=0.0)
+
+    print(f"\n  Unique raw IDs (no relinker):   {n_raw_ids}")
+    print(f"  Unique raw IDs (with relinker): {n_raw_ids_r}")
+    print(f"  Relink events fired:            {len(relink_events)}")
+    print(f"  Max dwell WITHOUT IDRelinker:   {max_raw_dwell:.2f}s")
+    print(f"  Max dwell WITH IDRelinker:      {max_canon_dwell:.2f}s")
+
+    # Core assertion: IDRelinker must not make dwell *worse*
+    assert max_canon_dwell >= max_raw_dwell, (
+        f"IDRelinker degraded dwell continuity: "
+        f"raw={max_raw_dwell:.2f}s > canon={max_canon_dwell:.2f}s"
+    )
+
+    # Structural assertion: pipeline completed without crashing
+    assert n_raw_ids > 0, "No detections at all — check model or video path"
+
 
 # ─────────────────────────────────────────────────────────────
-# Final comparison
+# Standalone script entry-point (python tests/test_dwell_accumulation.py)
 # ─────────────────────────────────────────────────────────────
-print()
-print("=" * 65)
-print("RESULTS SUMMARY")
-print("=" * 65)
-print(f"  Alert threshold:                     {ALERT_THRESHOLD_S}s")
-print(f"  Max dwell WITHOUT IDRelinker:        {max_raw_dwell:.2f}s")
-print(f"  Max dwell WITH IDRelinker:           {max_canon_dwell:.2f}s")
-print(f"  Alert fires WITHOUT IDRelinker:      {'YES' if raw_above_threshold else 'NO'}")
-print(f"  Alert fires WITH IDRelinker:         {'YES' if canon_above_threshold else 'NO'}")
-print(f"  Relink events that saved continuity: {len(relink_events)}")
-print("=" * 65)
+if __name__ == "__main__":
+    if not Path(VIDEO).exists():
+        print(f"ERROR: Video not found: {VIDEO}")
+        sys.exit(1)
 
-# Determine pass/fail for the integration test
-relinker_improves = max_canon_dwell >= max_raw_dwell
-alert_fired_with  = bool(canon_above_threshold)
-alert_fired_without = bool(raw_above_threshold)
+    print("=" * 65)
+    print("Running WITHOUT IDRelinker (raw tracker IDs only)...")
+    t0 = time.time()
+    dwell_raw, _, n_raw_ids = run(VIDEO, use_relinker=False)
+    print(f"  Done in {time.time()-t0:.1f}s")
 
-if alert_fired_with and not alert_fired_without:
-    verdict = "[PASS] IDRelinker enabled alert that raw tracker missed"
-elif max_canon_dwell > max_raw_dwell + 0.5:
-    verdict = f"[PASS] IDRelinker added >{max_canon_dwell - max_raw_dwell:.1f}s of dwell continuity"
-elif alert_fired_with and alert_fired_without:
-    verdict = "[WARN] INCONCLUSIVE: Both fire threshold -- clip dwell is long enough that relinker is not decisive in this window"
-else:
-    verdict = f"[FAIL] IDRelinker did not improve dwell continuity (raw={max_raw_dwell:.2f}s, canon={max_canon_dwell:.2f}s)"
+    max_raw_dwell = max(dwell_raw.values(), default=0.0)
+    raw_above_threshold = [iid for iid, d in dwell_raw.items() if d >= ALERT_THRESHOLD_S]
+    print(f"  Unique raw IDs seen:       {n_raw_ids}")
+    print(f"  Max dwell (any raw ID):    {max_raw_dwell:.2f}s")
+    print(f"  IDs crossing {ALERT_THRESHOLD_S}s threshold: {raw_above_threshold}")
 
-print(f"\n  Integration test verdict: {verdict}")
+    print()
+    print("Running WITH IDRelinker (canonical ID continuity)...")
+    t0 = time.time()
+    dwell_canon, relink_events, n_raw_ids_r = run(VIDEO, use_relinker=True)
+    print(f"  Done in {time.time()-t0:.1f}s")
+
+    max_canon_dwell = max(dwell_canon.values(), default=0.0)
+    canon_above_threshold = [iid for iid, d in dwell_canon.items() if d >= ALERT_THRESHOLD_S]
+    print(f"  Unique raw IDs seen:       {n_raw_ids_r}")
+    print(f"  Relink events (ID saved):  {len(relink_events)}")
+    if relink_events[:5]:
+        print(f"  First relinks: {relink_events[:5]}")
+    print(f"  Max dwell (canonical ID):  {max_canon_dwell:.2f}s")
+    print(f"  IDs crossing {ALERT_THRESHOLD_S}s threshold: {canon_above_threshold}")
+
+    print()
+    print("=" * 65)
+    print("RESULTS SUMMARY")
+    print("=" * 65)
+    print(f"  Alert threshold:                     {ALERT_THRESHOLD_S}s")
+    print(f"  Max dwell WITHOUT IDRelinker:        {max_raw_dwell:.2f}s")
+    print(f"  Max dwell WITH IDRelinker:           {max_canon_dwell:.2f}s")
+    print(f"  Alert fires WITHOUT IDRelinker:      {'YES' if raw_above_threshold else 'NO'}")
+    print(f"  Alert fires WITH IDRelinker:         {'YES' if canon_above_threshold else 'NO'}")
+    print(f"  Relink events that saved continuity: {len(relink_events)}")
+    print("=" * 65)
+
+    alert_fired_with    = bool(canon_above_threshold)
+    alert_fired_without = bool(raw_above_threshold)
+
+    if alert_fired_with and not alert_fired_without:
+        verdict = "[PASS] IDRelinker enabled alert that raw tracker missed"
+    elif max_canon_dwell > max_raw_dwell + 0.5:
+        verdict = f"[PASS] IDRelinker added >{max_canon_dwell - max_raw_dwell:.1f}s of dwell continuity"
+    elif alert_fired_with and alert_fired_without:
+        verdict = "[WARN] INCONCLUSIVE: Both fire threshold — clip dwell is long enough that relinker is not decisive in this window"
+    else:
+        verdict = f"[FAIL] IDRelinker did not improve dwell continuity (raw={max_raw_dwell:.2f}s, canon={max_canon_dwell:.2f}s)"
+
+    print(f"\n  Integration test verdict: {verdict}")
